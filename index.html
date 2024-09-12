@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 0 Targets</title>
+<style>
+  body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif; /* Ensure uniform font across all text */
+    position: relative;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  header {
+    width: 80%; /* Same as table width */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+  }
+  h1 {
+    margin: 0; /* Remove default margin */
+    font-size: 24px; /* Specific font size for headers */
+  }
+  .timer h1 {
+    font-size: 24px; /* Same font size as Day-0 header */
+    padding: 0; /* Align styling with header */
+    margin: 0; /* Consistent spacing */
+  }
+  table {
+    width: 80%;
+    border-collapse: collapse;
+  }
+  th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+  }
+  th {
+    background-color: #f2f2f2;
+  }
+  .green {
+    background-color: #90EE90;
+  }
+  button {
+    background: none;
+    border: none;
+    width: 100%;
+    height: 100%;
+    padding: 5px 10px;
+  }
+</style>
+</head>
+<body>
+<header>
+    <h1>Day-0</h1>
+    <div class="timer"><h1 id="timer">Time left: 24:00:00</h1></div>
+</header>
+<table>
+  <tr>
+    <td rowspan="1">CODEFORCES</td>
+    <td colspan="2" onclick="handleButtonClick('codeforces', 1, this)"><button>1</button></td>
+    <td colspan="2" onclick="handleButtonClick('codeforces', 2, this)"><button>2</button></td>
+    <td colspan="2" onclick="handleButtonClick('codeforces', 3, this)"><button>3</button></td>
+    <td colspan="2" onclick="handleButtonClick('codeforces', 4, this)"><button>4</button></td>
+    <td colspan="2" onclick="handleButtonClick('codeforces', 5, this)"><button>5</button></td>
+  </tr>
+  <tr>
+    <td>OLT</td>
+    <td onclick="handleButtonClick('olt', 1, this)"><button>1</button></td>
+    <td onclick="handleButtonClick('olt', 2, this)"><button>2</button></td>
+    <td onclick="handleButtonClick('olt', 3, this)"><button>3</button></td>
+    <td onclick="handleButtonClick('olt', 4, this)"><button>4</button></td>
+    <td onclick="handleButtonClick('olt', 5, this)"><button>5</button></td>
+    <td onclick="handleButtonClick('olt', 6, this)"><button>6</button></td>
+    <td onclick="handleButtonClick('olt', 7, this)"><button>7</button></td>
+    <td onclick="handleButtonClick('olt', 8, this)"><button>8</button></td>
+    <td onclick="handleButtonClick('olt', 9, this)"><button>9</button></td>
+    <td onclick="handleButtonClick('olt', 10, this)"><button>10</button></td>
+  </tr>
+  <tr>
+    <td>CONTEST</td>
+    <td colspan="10" onclick="handleButtonClick('contest', 'done', this)"><button>DONE</button></td>
+  </tr>
+  <tr>
+    <td>DSA</td>
+    <td colspan="5" onclick="handleButtonClick('dsa', 'leetcode', this)"><button>LEETCODE</button></td>
+    <td colspan="5" onclick="handleButtonClick('dsa', 'pramp', this)"><button>PRAMP</button></td>
+  </tr>
+  <tr>
+    <td>CSE SUBJECTS</td>
+    <td colspan="3" onclick="handleButtonClick('cse_sub', 'os', this)"><button>OS</button></td>
+    <td colspan="3" onclick="handleButtonClick('cse_sub', 'oops', this)"><button>OOPS</button></td>
+    <td colspan="4" onclick="handleButtonClick('cse_sub', 'dbms', this)"><button>DBMS</button></td>
+  </tr>
+  <tr>
+    <td>TECHNICAL SKILLS</td>
+    <td colspan="10" onclick="handleButtonClick('t_skills', 'done', this)"><button>DONE</button></td>
+  </tr>
+  <tr>
+    <td>REVISION</td>
+    <td colspan="10" onclick="handleButtonClick('revision', 'done', this)"><button>DONE</button></td>
+  </tr>
+</table>
+
+<script>
+const clickState = {
+    codeforces: new Set([1, 2, 3, 4, 5]),
+    olt: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
+    contest: new Set(['done']),
+    dsa: new Set(['leetcode', 'pramp']),
+    cse_sub: new Set(['os', 'oops', 'dbms']),
+    t_skills: new Set(['done']),
+    revision: new Set(['done']),
+};
+
+// Function to handle button clicks
+function handleButtonClick(group, item, element) {
+    if (clickState[group].has(item)) {
+        clickState[group].delete(item); // Remove the clicked item from the set
+        element.classList.add('green'); // Turn the button green
+        checkCompletion();
+    }
+}
+
+// Function to check if all sets are empty
+function checkCompletion() {
+    // Check if all sets are empty
+    const allClicked = Object.values(clickState).every(set => set.size === 0);
+    if (allClicked) {
+        window.location.href = "hurry.html"; // Redirect to hurry.html
+    }
+}
+
+function startTimer() {
+    const timerElement = document.getElementById('timer');
+    const endOfDay = new Date();
+    endOfDay.setHours(24, 0, 0, 0); // Set end time to midnight
+
+    function updateTimer() {
+        const currentTime = new Date();
+        const timeLeft = endOfDay - currentTime;
+        if (timeLeft < 0) {
+            clearInterval(timerInterval);
+            timerElement.textContent = "Time's up!";
+            return;
+        }
+        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+        timerElement.textContent = `Time left: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+
+    const timerInterval = setInterval(updateTimer, 1000);
+    updateTimer();
+}
+
+window.onload = startTimer;
+</script>
+</body>
+</html>

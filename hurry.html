@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Congratulations!</title>
+<style>
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f0f8ff;
+  }
+  h1 {
+    font-size: 36px;
+    color: #4CAF50;
+  }
+  p {
+    font-size: 20px;
+    margin: 20px 0;
+  }
+</style>
+</head>
+<body>
+<h1>Hurryyy Shashank Ewwwww!</h1>
+<p id="quote"></p>
+
+<script>
+const quotes = [
+    "“First, solve the problem. Then, write the code.” – John Johnson",
+    "“Experience is the name everyone gives to their mistakes.” – Oscar Wilde",
+    "“In order to be irreplaceable, one must always be different.” – Coco Chanel",
+    "“Java is to JavaScript what car is to Carpet.” – Chris Heilmann",
+    "“Knowledge is power.” – Francis Bacon",
+    "“Sometimes it pays to stay in bed on Monday, rather than spending the rest of the week debugging Monday’s code.” – Dan Salomon",
+    "“Simplicity is the soul of efficiency.” – Austin Freeman",
+    "“Code is like humor. When you have to explain it, it’s bad.” – Cory House",
+    "“Fix the cause, not the symptom.” – Steve Maguire",
+    "“Optimism is an occupational hazard of programming: feedback is the treatment.” – Kent Beck",
+    "“When to use iterative development? You should use iterative development only on projects that you want to succeed.” – Martin Fowler"
+];
+
+function displayRandomQuote() {
+    const randomIndex = Math.floor(Math.random() * quotes.length);
+    document.getElementById('quote').textContent = quotes[randomIndex];
+}
+
+window.onload = displayRandomQuote;
+</script>
+</body>
+</html>
