@@ -121,13 +121,16 @@ const clickState = {
     revision: new Set(['done']),
 };
 
-// Function to handle button clicks
+// Function to handle button clicks (toggle)
 function handleButtonClick(group, item, element) {
     if (clickState[group].has(item)) {
         clickState[group].delete(item); // Remove the clicked item from the set
         element.classList.add('green'); // Turn the button green
-        checkCompletion();
+    } else {
+        clickState[group].add(item); // Add the item back to the set
+        element.classList.remove('green'); // Remove green color, revert to white
     }
+    checkCompletion();
 }
 
 // Function to check if all sets are empty
